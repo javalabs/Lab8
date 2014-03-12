@@ -1,45 +1,33 @@
 package org.yegorov.lab8;
 
-
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+//import javax.swing.JTextField;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import javax.swing.JButton;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.JPopupMenu;
 import javax.swing.JComboBox;
-
 import java.awt.Panel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
 import javax.swing.JTextArea;
-import javax.swing.DropMode;
+//import javax.swing.DropMode;
 /*
- * 
- * 
 Задание на лабораторную работу:
 1. Разработать ООП модель предметной области.
 2. Написать приложение с графическим пользовательским интерфейсом
@@ -58,17 +46,9 @@ import javax.swing.DropMode;
 снятие средств, 
 печать чека на экран, 
 сохранение текущего баланса при выходе из программы.
- * 
  */
-public class ActionUser extends JFrame {
 
-	/**
-	 * 	
-	 */
-	final public static String CURRENCY_UAH = "UAH г.";
-	final public static String CURRENCY_RUB = "RUB р.";
-	final public static String CURRENCY_USD = "USD $ ";
-	final public static String CURRENCY_EUR = "EUR € ";
+public class ActionUser extends JFrame {
 	
 	About dialog = null;
 	
@@ -150,10 +130,10 @@ public class ActionUser extends JFrame {
 		
 		menuBar.setVisible(menubarShowHide);
 		
-		JMenu mnNewMenu_2 = new JMenu("Settings");
+		JMenu mnNewMenu_2 = new JMenu(R.Settings);
 		menuBar.add(mnNewMenu_2);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Font");
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem(R.Font);
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				changeFont();
@@ -161,10 +141,10 @@ public class ActionUser extends JFrame {
 		});
 		mnNewMenu_2.add(mntmNewMenuItem_1);
 		
-		mnNewMenu = new JMenu("Help");
+		mnNewMenu = new JMenu(R.Help);
 		menuBar.add(mnNewMenu);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("About");
+		JMenuItem mntmNewMenuItem = new JMenuItem(R.About);
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -173,7 +153,7 @@ public class ActionUser extends JFrame {
 		});
 		mnNewMenu.add(mntmNewMenuItem);
 		
-		JMenu mnNewMenu_1 = new JMenu("Reloaded");
+		JMenu mnNewMenu_1 = new JMenu(R.Reloaded);
 		mnNewMenu_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -186,14 +166,14 @@ public class ActionUser extends JFrame {
 		});
 		menuBar.add(mnNewMenu_1);
 		
-		JMenu mnExit = new JMenu("Exit");
+		JMenu mnExit = new JMenu(R.Exit);
 		mnExit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if(JOptionPane.OK_OPTION == 
 				   JOptionPane.showConfirmDialog(null,
-						   	"Are you sure you want to quit?", 
-						   	"Exit", JOptionPane.YES_NO_OPTION))
+						   	R.Ask_quit, 
+						   	R.Exit, JOptionPane.YES_NO_OPTION))
 						   	System.exit(0);
 			}
 		});
@@ -207,7 +187,7 @@ public class ActionUser extends JFrame {
 		popupMenu.setLocation(57, 91);
 		addPopup(contentPane, popupMenu);
 		
-		JMenuItem mntmShowMenu = new JMenuItem("Show/Hide menu");
+		JMenuItem mntmShowMenu = new JMenuItem(R.Menu_item_show_hide);
 		mntmShowMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				menuHideShow();
@@ -245,28 +225,28 @@ public class ActionUser extends JFrame {
 		comboBox.setFont(new Font("Arial", Font.PLAIN, 16));
 		comboBox.setBounds(10, 45, 95, 27);
 		panel.add(comboBox);
-		comboBox.addItem(CURRENCY_UAH);
-		comboBox.addItem(CURRENCY_RUB);
-		comboBox.addItem(CURRENCY_USD);
-		comboBox.addItem(CURRENCY_EUR);
+		comboBox.addItem(R.CURRENCY_UAH);
+		comboBox.addItem(R.CURRENCY_RUB);
+		comboBox.addItem(R.CURRENCY_USD);
+		comboBox.addItem(R.CURRENCY_EUR);
 		
-		label = new JLabel("Валюта:");
+		label = new JLabel(R.Currency+": ");
 		label.setFont(new Font("Arial", Font.PLAIN, 16));
 		label.setBounds(10, 10, 95, 29);
 		panel.add(label);
 		
-		btnNewButton_1 = new JButton("Снять средства");
+		btnNewButton_1 = new JButton(R.Withdraw_funds);
 		btnNewButton_1.setFont(new Font("Arial", Font.PLAIN, 16));
 		btnNewButton_1.setBounds(10, 194, 203, 51);
 		panel.add(btnNewButton_1);
 		
-		btnNewButton_2 = new JButton("Просмотр баланса");
+		btnNewButton_2 = new JButton(R.Watch_balance);
 		btnNewButton_2.setFont(new Font("Arial", Font.PLAIN, 16));
 		btnNewButton_2.setBounds(318, 194, 203, 51);
 		panel.add(btnNewButton_2);
 		
 		
-		setTitle("ATM");
+		setTitle(R.ATM);
 	}
 	private void menuHideShow() {
 		if(menubarShowHide)
@@ -277,10 +257,10 @@ public class ActionUser extends JFrame {
 		menuBar.setVisible(menubarShowHide);
 	}
 	private void changeFont() {
-		String font = "";
+		String font = null;
 
-		font = JOptionPane.showInputDialog("Input Font:");
-		if(font.length()==0)
+		font = JOptionPane.showInputDialog(R.Input_font+": ");
+		if(font.equals(""))
 			return;
 		textField.setFont(new Font(font, Font.PLAIN, 14));
 		Font newFont = new Font(font, Font.PLAIN, 16);

@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 
 public class Core {
 	private Map<String, Double> curse;
@@ -20,10 +19,10 @@ public class Core {
 	
 	public Core() {
 		curse = new HashMap<String,Double>();
-		curse.put(ActionUser.CURRENCY_USD, 9.67);
-		curse.put(ActionUser.CURRENCY_EUR, 13.47);
-		curse.put(ActionUser.CURRENCY_RUB, 0.26);
-		curse.put(ActionUser.CURRENCY_UAH, 1.0);
+		curse.put(R.CURRENCY_USD, 9.67);
+		curse.put(R.CURRENCY_EUR, 13.47);
+		curse.put(R.CURRENCY_RUB, 0.26);
+		curse.put(R.CURRENCY_UAH, 1.0);
 		testaccount = new Account(	"Цукерберг", 
 									"Марк", 
 									"Эллиот", 
@@ -32,7 +31,7 @@ public class Core {
 	}
 	
 	public String Serialization() {
-		File f = new File("src\\account.xml");
+		File f = new File("account.xml");
 		if(!f.exists())
 			try {
 				f.createNewFile();
@@ -63,7 +62,7 @@ public class Core {
 		
 	      XStream xstream = new XStream(); // require XPP3 library
 
-	      xstream.alias("Account",  Account.class);
+	      xstream.alias(R.ALIAS_XML,  Account.class);
 	      testaccount = (Account) xstream.fromXML(xml);
 	      
 	      testaccount.setBalance(testaccount.getBalance()-10);
