@@ -33,6 +33,10 @@ public class Account {
 		this.verificationCode = verificationCode;
 	}
 	
+	public Account() {
+		
+	}
+	
 	// Возвращает полное имя пользователя (ФИО)
 	public String getUserName() {
 		return surname+" "+name+" "+patronymic;

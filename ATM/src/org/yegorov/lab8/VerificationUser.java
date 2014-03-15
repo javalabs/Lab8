@@ -5,7 +5,6 @@ import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JPasswordField;
@@ -100,10 +99,15 @@ public class VerificationUser extends JDialog {
 				});
 			}
 		}
-		setTitle("Enter Password!");
+		setTitle(R.Enter_password);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{getContentPane(), contentPanel, passwordField, okButton, cancelButton}));
 	}
-
+	
+	public void cleanPasswordField() {
+		passwordField.setText("");
+		passwordField.requestFocus();
+	}
+	
 	public String getHashPassword() {
 		//JOptionPane.showMessageDialog(this,
         //        "Success! You typed the right password.");
@@ -130,7 +134,7 @@ public class VerificationUser extends JDialog {
 		*  то генерируем хеш пароля
 		*  иначе возвращаем null
 		*/
-		if(p.length!=0) {
+		if(p.length != 0) {
 			MessageDigest cript = null;
 			try {
 				cript = MessageDigest.getInstance("SHA-1");
@@ -140,8 +144,9 @@ public class VerificationUser extends JDialog {
 				e.printStackTrace();
 			}
 			password = new BigInteger(1, cript.digest()).toString(16);
-			//убрать
-			JOptionPane.showMessageDialog(this, password);
+			
+			//посмотреть хешь 
+			//JOptionPane.showMessageDialog(this, password);
 		}
 		
 		return password;

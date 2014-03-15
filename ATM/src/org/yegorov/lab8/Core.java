@@ -1,76 +1,102 @@
 package org.yegorov.lab8;
 
-
-
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
-
 import com.thoughtworks.xstream.XStream;
 
+/*
+ * Класс для управления аккаунтом (выполнения операций над ним)
+ */
 public class Core {
 	private Map<String, Double> curse;
 
 	private Account account;
-	private Account testaccount;
+	private File file;
+	private PrintWriter writer;
+	private FileReader reader;
+	private XStream xmlStream;
 	
 	public Core() {
 		curse = new HashMap<String,Double>();
-		curse.put(R.CURRENCY_USD, 9.67);
-		curse.put(R.CURRENCY_EUR, 13.47);
-		curse.put(R.CURRENCY_RUB, 0.26);
-		curse.put(R.CURRENCY_UAH, 1.0);
-		testaccount = new Account(	"Цукерберг", 
-									"Марк", 
-									"Эллиот", 
-									5000, 
-									"9ab44eaf7fa715f9f84b75954e445d72547e2a22");
+		curse.put(R.CURRENCY_USD, R.CURSE_USD);
+		curse.put(R.CURRENCY_EUR, R.CURSE_EUR);
+		curse.put(R.CURRENCY_RUB, R.CURSE_RUB);
+		curse.put(R.CURRENCY_UAH, R.CURSE_UAH);
+		
+		account = new Account();
+		
+		file = new File(R.ACCOUNT_FILE_PATH);
+		
+		xmlStream = new XStream();
+		xmlStream.alias(R.ALIAS_XML, Account.class);
+		
 	}
 	
-	public String Serialization() {
-		File f = new File("account.xml");
-		if(!f.exists())
-			try {
-				f.createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		PrintWriter pf = null;
-		try {
-			pf = new PrintWriter(f);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-	      XStream xstream = new XStream(); // require XPP3 library
-
-	      xstream.alias("Account",  Account.class);
-	      
-	      String xml = xstream.toXML(testaccount);
-	      xstream.toXML(testaccount, pf);
-	      pf.close();
-
-	      return xml;
-	}
-	public void DeSerialization(String xml) {
-		
-	      XStream xstream = new XStream(); // require XPP3 library
-
-	      xstream.alias(R.ALIAS_XML,  Account.class);
-	      testaccount = (Account) xstream.fromXML(xml);
-	      
-	      testaccount.setBalance(testaccount.getBalance()-10);
-	      
-
+	public void initAccount() throws FileNotFoundException, IOException {
+		read();
 	}
 	
-	public String printCheck(double givenMoney,String currency) {
-		return "Выдано: "+String.valueOf(givenMoney)+" "+currency+"\nОстаток: ";
+	public boolean verifyAccount(String code) {
+		return code.equals(account.getVerificationCode());
+	}
+	
+	public String getBalance() {
+		return String.valueOf(account.getBalance());
+	}
+
+	public String getBalance(String currency) {
+		return String.format("%.2f",account.getBalance()/curse.get(currency));
+	}
+	
+	public String getUserName() {
+		return account.getUserName();
+	}
+	
+	public String takeMoney(String currency, double money) {
+		if(account.getBalance() - money * curse.get(currency) < 0)
+			return R.ERROR_money_tight;
+		
+		double given = money * curse.get(currency);
+		double balance = account.getBalance() - given;
+		account.setBalance(balance);
+		//По идее тут нужно записывать в файл все изменения
+		return R.Given + ": " + String.format("%.2f", given)   + " " + R.CURRENCY_UAH + " \n"
+			+R.Balance + ": " + String.format("%.2f", balance) + " " + R.CURRENCY_UAH;
+	}
+	public void saveAccount() throws FileNotFoundException {
+		write();
+	}
+	
+	private void read() throws IOException, FileNotFoundException {
+		if(!file.exists())
+			throw new FileNotFoundException();
+		
+		reader = new FileReader(file);
+		deserialize(reader);			
+		reader.close();
+	}
+	
+	private void deserialize(Reader r) {
+		account = (Account)xmlStream.fromXML(r);
+	}
+	
+	private void write() throws FileNotFoundException {
+		if(!file.exists())
+			throw new FileNotFoundException();
+		
+		writer = new PrintWriter(file);
+		serialize(writer);
+		writer.close();
+	}
+	
+	private void serialize(Writer w) {
+		xmlStream.toXML(account, w);
 	}
 }

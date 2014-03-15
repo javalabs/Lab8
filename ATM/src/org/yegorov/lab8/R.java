@@ -8,6 +8,11 @@ public final class R {
 	final public static String CURRENCY_RUB = "RUB р";
 	final public static String CURRENCY_USD = "USD $";
 	final public static String CURRENCY_EUR = "EUR €";
+
+	final public static Double CURSE_UAH = 1.0;
+	final public static Double CURSE_RUB = 0.27;
+	final public static Double CURSE_USD = 10.26;
+	final public static Double CURSE_EUR = 14.25;
 	
 	// Core
 	final public static String ALIAS_XML = "Account";
@@ -16,6 +21,7 @@ public final class R {
 	final public static String Currency = "Валюта";
 	final public static String Given = "Выдано";
 	final public static String Balance = "Остаток";
+	final public static String ERROR_money_tight = "Недостаточно денег \nдля выдачи";
 	
 	// GUI 
 	final public static String Settings = "Settings";
@@ -32,5 +38,18 @@ public final class R {
 	final public static String ATM = "ATM";
 	
 	final public static String Input_font = "Input Font";
+	
+	final public static String Incorrect_password = "Вы ввели неправильно 3 раза пароль. Карточка заблокирована";
+	final public static String Not_fount_file_error = "Файл с данными аккаунта не найден";
+	final public static String Unknown_error = "Неизвестная ошибка";
+	final public static String Enter_password = "Введите пароль";
+	final public static String Repeat_password = "Неправильный пароль! Повторите ввод";
+	
+	final public static String Wellcome = "Добрый день, ";
+	final public static String String_balance = "На вашем денежном счету: ";
+	
+	final public static String String_take_money = "Введите сумму кратную 5: ";
+	final public static String String_next = "Продолжить";
+	final public static String String_cash = "Выдача наличных...";
 
 }
