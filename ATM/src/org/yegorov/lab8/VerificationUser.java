@@ -19,7 +19,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /*
- * Форма для ввода пароля
+ * Р¤РѕСЂРјР° РґР»СЏ РІРІРѕРґР° РїР°СЂРѕР»СЏ
  */
 
 public class VerificationUser extends JDialog {
@@ -27,24 +27,24 @@ public class VerificationUser extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	
-	// Поле для ввода пароля
+	// РџРѕР»Рµ РґР»СЏ РІРІРѕРґР° РїР°СЂРѕР»СЏ
 	private JPasswordField passwordField;
 	
-	// Кнопка для продолжения
+	// РљРЅРѕРїРєР° РґР»СЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ
 	private JButton okButton;
 	
-	// Кнопка для отмены
+	// РљРЅРѕРїРєР° РґР»СЏ РѕС‚РјРµРЅС‹
 	private JButton cancelButton;
 
-	// Конструктор с 2 параметрами (владелец окна, модальность окна)
+	// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ 2 РїР°СЂР°РјРµС‚СЂР°РјРё (РІР»Р°РґРµР»РµС† РѕРєРЅР°, РјРѕРґР°Р»СЊРЅРѕСЃС‚СЊ РѕРєРЅР°)
 	public VerificationUser(ActionUser actionUser, boolean isModal) {
 		super(actionUser, isModal);
 		
-		// Обработка события при открытии окна
+		// РћР±СЂР°Р±РѕС‚РєР° СЃРѕР±С‹С‚РёСЏ РїСЂРё РѕС‚РєСЂС‹С‚РёРё РѕРєРЅР°
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
-				// Наведение фокуса на поле с паролем
+				// РќР°РІРµРґРµРЅРёРµ С„РѕРєСѓСЃР° РЅР° РїРѕР»Рµ СЃ РїР°СЂРѕР»РµРј
 				passwordField.requestFocus();
 			}
 		});
@@ -75,12 +75,12 @@ public class VerificationUser extends JDialog {
 					okButton.setBounds(99, 65, 55, 23);
 					contentPanel.add(okButton);
 					
-					// Обработка события, если была нажата кнопка продолжения
+					// РћР±СЂР°Р±РѕС‚РєР° СЃРѕР±С‹С‚РёСЏ, РµСЃР»Рё Р±С‹Р»Р° РЅР°Р¶Р°С‚Р° РєРЅРѕРїРєР° РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ
 					okButton.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
 							//hide();
-							// Скрываем форму ввода пароля
+							// РЎРєСЂС‹РІР°РµРј С„РѕСЂРјСѓ РІРІРѕРґР° РїР°СЂРѕР»СЏ
 							setVisible(false);
 							
 						}
@@ -89,7 +89,7 @@ public class VerificationUser extends JDialog {
 					getRootPane().setDefaultButton(okButton);
 				}
 				
-				// Обработка события, если была нажата кнопка отмены
+				// РћР±СЂР°Р±РѕС‚РєР° СЃРѕР±С‹С‚РёСЏ, РµСЃР»Рё Р±С‹Р»Р° РЅР°Р¶Р°С‚Р° РєРЅРѕРїРєР° РѕС‚РјРµРЅС‹
 				cancelButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -112,27 +112,27 @@ public class VerificationUser extends JDialog {
 		//JOptionPane.showMessageDialog(this,
         //        "Success! You typed the right password.");
 		
-		// Хеш-строка пароля введенного пользователем
+		// РҐРµС€-СЃС‚СЂРѕРєР° РїР°СЂРѕР»СЏ РІРІРµРґРµРЅРЅРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј
 		String password = null;
 		
-		// Соль для удленения строки пароля
+		// РЎРѕР»СЊ РґР»СЏ СѓРґР»РµРЅРµРЅРёСЏ СЃС‚СЂРѕРєРё РїР°СЂРѕР»СЏ
 		char[] salt = new char[]{'d','o','n','n','t','u','c','s','t',')','*'};	
 		
-		// Чистый пароль, введенный пользователем через поле
+		// Р§РёСЃС‚С‹Р№ РїР°СЂРѕР»СЊ, РІРІРµРґРµРЅРЅС‹Р№ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј С‡РµСЂРµР· РїРѕР»Рµ
 		char[] p = passwordField.getPassword();
 		
-		// Общий массив для хранения удлененного пароля
+		// РћР±С‰РёР№ РјР°СЃСЃРёРІ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ СѓРґР»РµРЅРµРЅРЅРѕРіРѕ РїР°СЂРѕР»СЏ
 		char[] pass = new char[salt.length + p.length];
 		
-		// Копирование в массив pass символов массива salt
+		// РљРѕРїРёСЂРѕРІР°РЅРёРµ РІ РјР°СЃСЃРёРІ pass СЃРёРјРІРѕР»РѕРІ РјР°СЃСЃРёРІР° salt
 		System.arraycopy(salt, 0, pass, 0, salt.length);
 		
-		// Добавление к массиву pass символов массива p
+		// Р”РѕР±Р°РІР»РµРЅРёРµ Рє РјР°СЃСЃРёРІСѓ pass СЃРёРјРІРѕР»РѕРІ РјР°СЃСЃРёРІР° p
 		System.arraycopy(p, 0, pass, salt.length, p.length);
 		
-		/* Если длина чистого пароля не равна 0
-		*  то генерируем хеш пароля
-		*  иначе возвращаем null
+		/* Р•СЃР»Рё РґР»РёРЅР° С‡РёСЃС‚РѕРіРѕ РїР°СЂРѕР»СЏ РЅРµ СЂР°РІРЅР° 0
+		*  С‚Рѕ РіРµРЅРµСЂРёСЂСѓРµРј С…РµС€ РїР°СЂРѕР»СЏ
+		*  РёРЅР°С‡Рµ РІРѕР·РІСЂР°С‰Р°РµРј null
 		*/
 		if(p.length != 0) {
 			MessageDigest cript = null;
@@ -145,7 +145,7 @@ public class VerificationUser extends JDialog {
 			}
 			password = new BigInteger(1, cript.digest()).toString(16);
 			
-			//посмотреть хешь 
+			//РїРѕСЃРјРѕС‚СЂРµС‚СЊ С…РµС€СЊ 
 			//JOptionPane.showMessageDialog(this, password);
 		}
 		

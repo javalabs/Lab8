@@ -3,44 +3,29 @@ package org.yegorov.lab8;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.TrayIcon.MessageType;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
-import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-//import javax.swing.JTextField;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import javax.swing.JButton;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.JPopupMenu;
 import javax.swing.JComboBox;
-
 import java.awt.Panel;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import javax.swing.JFormattedTextField;
 
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-//import javax.swing.DropMode;
 /*
 Задание на лабораторную работу:
 1. Разработать ООП модель предметной области.
@@ -52,43 +37,45 @@ import javax.swing.JTextField;
 	- установку шрифта для вывода текста;
 	- обработку минимум двух событий.
 
- * 
-3.	Приложение-банкомат. 
-Реализовать вход, +
-выбор валюты, +
-просмотр баланса, +
-снятие средств, +
-печать чека на экран, +
-сохранение текущего баланса при выходе из программы.+
+
+	3.	Приложение-банкомат. 
+		Реализовать вход, +
+		выбор валюты, +
+		просмотр баланса, +
+		снятие средств, +
+		печать чека на экран, +
+		сохранение текущего баланса при выходе из программы. +
+
  */
 
 public class ActionUser extends JFrame {
-	
-	About dialog = null;
-	
+	// Формы
+	private About dialog;
+	private VerificationUser verificationUser;
 	
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private VerificationUser verificationUser;
+	
 	private JMenu mnNewMenu;
 	private JMenuBar menuBar;
-	private JComboBox<String> comboBox;
-	private JButton btnNewButton_1;
-	private JButton btnNewButton_2;
-	private JLabel label;//Валюта
-	private JLabel label_1;//приветствие
+	private JComboBox<String> comboBox;		// Выбор валюты
+	private JButton btnNewButton_1;			// Снять средства
+	private JButton btnNewButton_2;			// Просмотр баланса
+	private JLabel label;					// Валюта
+	private JLabel label_1;					// Приветствие
 	private Font font;
 	private Panel panel;
 	private boolean menubarShowHide = false;
 	
 	private Core atm;
-	private JLabel lblNewLabel;
-	private JTextField textField;
-	private JButton btnNewButton;
+	private JLabel lblNewLabel;				// Чек
+	private JFormattedTextField textField;	// Ввод суммы для снятия
+	private JButton btnNewButton;			// Продолжение операции
 	
 	/**
 	 * Launch the application.
 	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -107,25 +94,19 @@ public class ActionUser extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
 	public ActionUser() {
 		atm = new Core();
-		
-		
-		
 		setResizable(false);
-
-		addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent arg0) {
-				//textField.setText(arg0.getKeyText(arg0.getKeyCode()));
-				if(arg0.getKeyCode()==KeyEvent.VK_F1)
-					menuHideShow();
-			}
-		});
+		
+		// Обработка события при открытии окна
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {
+				panel.setVisible(false);	// Скрываем панель
 				
+				
+				// Пытаемся подгрузить данные с файла
 				try {
 					atm.initAccount();
 				} catch (FileNotFoundException e) {
@@ -138,43 +119,38 @@ public class ActionUser extends JFrame {
 					e.printStackTrace();
 				}
 				
-				panel.setVisible(false);
-				
 				int i = 0, n = 3;
-				while(i<3) {
-					if(chekVerification()) {
-						panel.setVisible(true);
+				while(i < n) {
+					if(chekVerification()) { 		// Если верификация успешана
+						panel.setVisible(true);		// Показываем панель и приветствие и выходим из цикла
 						label_1.setText(R.Wellcome+atm.getUserName());
 						break;
 					}
 				++i;
 				}
-				if(i==3) {
+				if(i == 3) {
 					JOptionPane.showMessageDialog(ActionUser.this, R.Incorrect_password, R.ATM, JOptionPane.WARNING_MESSAGE);
 					System.exit(0);
-				}
-					
-
-					
+				}	
 			}
+			
+			// Обработка события при выходе (Нажатие на красный крестик)
 			@Override
 			public void windowClosing(WindowEvent arg0) {
-				//TODO Сохранение баланса при выходе
-				
+				//Пытаемся сохранить баланса при выходе
 				try {
 					atm.saveAccount();
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
 				//JOptionPane.showMessageDialog(ActionUser.this, "press red cross");
 			}
 		});
 		
-		font = new Font("Arial", Font.PLAIN, 16);
+		font = new Font("Arial", Font.PLAIN, 16);	// Стандартный шрифт
 		
-		setFocusable(true);
+		//setFocusable(true);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 804, 487);
@@ -187,6 +163,7 @@ public class ActionUser extends JFrame {
 		JMenu mnNewMenu_2 = new JMenu(R.Settings);
 		menuBar.add(mnNewMenu_2);
 		
+		// Пункт меню смены шрифта и обработка события
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem(R.Font);
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -198,6 +175,7 @@ public class ActionUser extends JFrame {
 		mnNewMenu = new JMenu(R.Help);
 		menuBar.add(mnNewMenu);
 		
+		// Пункт меню об авторе и обработка события
 		JMenuItem mntmNewMenuItem = new JMenuItem(R.About);
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			@Override
@@ -207,12 +185,19 @@ public class ActionUser extends JFrame {
 		});
 		mnNewMenu.add(mntmNewMenuItem);
 		
+		// Пункт меню перезагрузка и обработка события
 		JMenu mnNewMenu_1 = new JMenu(R.Reloaded);
 		mnNewMenu_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				dispose();
-				
+				dispose(); // Освобождаем текущую форму
+				//Пытаемся сохранить баланса при выходе
+				try {
+					atm.saveAccount();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				ActionUser frame = new ActionUser();
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
@@ -226,9 +211,18 @@ public class ActionUser extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				if(JOptionPane.OK_OPTION == 
 				   JOptionPane.showConfirmDialog(null,
-						   	R.Ask_quit, 
-						   	R.Exit, JOptionPane.YES_NO_OPTION))
-						   	System.exit(0);
+						   						R.Ask_quit, 
+						   						R.Exit, JOptionPane.YES_NO_OPTION)) {
+					//Пытаемся сохранить баланса при выходе
+					try {
+						atm.saveAccount();
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					System.exit(0);
+				}
+						   	
 			}
 		});
 		menuBar.add(mnExit);
@@ -254,7 +248,8 @@ public class ActionUser extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		comboBox = new JComboBox<String>();
+		
+		comboBox = new JComboBox<String>(); // Создания списка с выбором валюты
 		comboBox.setFont(font);
 		comboBox.setBounds(10, 45, 95, 27);
 		panel.add(comboBox);
@@ -268,6 +263,7 @@ public class ActionUser extends JFrame {
 		label.setBounds(10, 10, 95, 29);
 		panel.add(label);
 		
+		// Кнопка снять средства и обработка события
 		btnNewButton_1 = new JButton(R.Withdraw_funds);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -278,6 +274,7 @@ public class ActionUser extends JFrame {
 		btnNewButton_1.setBounds(10, 245, 238, 59);
 		panel.add(btnNewButton_1);
 		
+		// Кнопка просмотр баланса и обработка события
 		btnNewButton_2 = new JButton(R.Watch_balance);
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -288,18 +285,31 @@ public class ActionUser extends JFrame {
 		btnNewButton_2.setBounds(416, 245, 238, 59);
 		panel.add(btnNewButton_2);
 		
+		// Поле для отображения приветствия
 		label_1 = new JLabel("");
 		label_1.setFont(font);
 		label_1.setBounds(189, 10, 445, 27);
 		panel.add(label_1);
 		
+		// Поле для отображения баланса
 		lblNewLabel = new JLabel("");
 		lblNewLabel.setFont(font);
 		lblNewLabel.setBounds(141, 83, 490, 59);
 		lblNewLabel.setVisible(false);
 		panel.add(lblNewLabel);
 		
-		textField = new JTextField();
+		// Текстовое поле для ввода суммы 
+		/*
+		NumberFormat format = NumberFormat.getInstance();
+		NumberFormatter formatter = new NumberFormatter(format);
+		formatter.setValueClass(Integer.class);
+		formatter.setAllowsInvalid(false);
+		formatter.setMinimum(0);
+		formatter.setMaximum(Integer.MAX_VALUE);
+		// If you want the value to be committed on each keystroke instead of focus lost
+		formatter.setCommitsOnValidEdit(true);
+		*/
+		textField = new JFormattedTextField();
 		textField.setBounds(141, 153, 187, 50);
 		panel.add(textField);
 		textField.setColumns(10);
@@ -307,6 +317,7 @@ public class ActionUser extends JFrame {
 		textField.setVisible(false);
 		
 		
+		// Кнопка для продолжения операции снятия средств
 		btnNewButton = new JButton(R.String_next);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -317,9 +328,6 @@ public class ActionUser extends JFrame {
 		panel.add(btnNewButton);
 		btnNewButton.setVisible(false);
 		btnNewButton.setFont(font);
-		
-		
-		
 		
 		setTitle(R.ATM);
 	}
@@ -350,6 +358,7 @@ public class ActionUser extends JFrame {
 		textField.setFont(newFont);
 		
 	}
+	
 	private void showAbout() {
 		if(dialog == null) //Создаем окно, если оно не создано
 			dialog = new About(this);
@@ -389,12 +398,23 @@ public class ActionUser extends JFrame {
 		lblNewLabel.setText(R.String_take_money);
 		lblNewLabel.setVisible(true);
 		textField.setVisible(true);
+		textField.setText("");
+		textField.requestFocus();
 		btnNewButton.setVisible(true);
 		
 	}
 	
 	private void confirmTakeMoney() {
-		double money = Double.parseDouble(textField.getText());
+		String text = textField.getText();
+		text = text.replaceAll("\\p{L}", "");
+		double money = 0;
+		try {
+			money = Double.parseDouble(text);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, R.String_error_cash, R.String_error, JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
 		JOptionPane.showMessageDialog(this, atm.takeMoney((String)comboBox.getSelectedItem(), money), R.String_cash, JOptionPane.INFORMATION_MESSAGE);
 	}
 	
