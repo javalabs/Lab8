@@ -1,24 +1,24 @@
 package org.yegorov.lab8;
 
 /*
- * РљР»Р°СЃСЃ, СЃРѕРґРµСЂР¶Р°С‰РёР№ РѕСЃРЅРѕРІРЅСѓСЋ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РїРѕР»СЊР·РѕРІР°С‚РµР»Рµ
+ * Класс, содержащий основную информацию о пользователе
  */
 
 public class Account {
 	
-	// Р¤Р°РјРёР»РёСЏ
+	// Фамилия
 	private String surname;
 	
-	// РРјСЏ
+	// Имя
 	private String name;
 	
-	// РћС‚С‡РµСЃС‚РІРѕ
+	// Отчество
 	private String patronymic;
 	
-	// РўРµРєСѓС‰РёР№ Р±Р°Р»Р°РЅСЃ (РІ UAH)
+	// Текущий баланс (в UAH)
 	private double balance;
 	
-	// РљРѕРґ РёРґРµРЅС‚РёС„РёРєР°С†РёРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+	// Код идентификации пользователя
 	private String verificationCode;
 	
 	public Account(	String surname, 
@@ -37,22 +37,22 @@ public class Account {
 		
 	}
 	
-	// Р’РѕР·РІСЂР°С‰Р°РµС‚ РїРѕР»РЅРѕРµ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (Р¤РРћ)
+	// Возвращает полное имя пользователя (ФИО)
 	public String getUserName() {
 		return surname+" "+name+" "+patronymic;
 	}
 	
-	// Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰РёР№ Р±Р°Р»Р°РЅСЃ
+	// Возвращает текущий баланс
 	public double getBalance() {
 		return balance;
 	}
 	
-	// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ С‚РµРєСѓС‰РёР№ Р±Р°Р»Р°РЅСЃ
+	// Устанавливает текущий баланс
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
 	
-	// Р’РѕР·РІСЂР°С‰Р°РµС‚ РєРѕРґ РёРґРµРЅС‚РёС„РёРєР°С†РёРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+	// Возвращает код идентификации пользователя
 	public String getVerificationCode() {
 		return verificationCode;
 	}

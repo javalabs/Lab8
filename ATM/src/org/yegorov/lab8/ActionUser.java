@@ -409,7 +409,7 @@ public class ActionUser extends JFrame {
 		text = text.replaceAll("\\p{L}", "");
 		double money = 0;
 		try {
-			money = Double.parseDouble(text);
+			money = Math.abs(Double.parseDouble(text));
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, R.String_error_cash, R.String_error, JOptionPane.ERROR_MESSAGE);
 			return;

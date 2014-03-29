@@ -12,7 +12,7 @@ import java.util.Map;
 import com.thoughtworks.xstream.XStream;
 
 /*
- * РљР»Р°СЃСЃ РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ Р°РєРєР°СѓРЅС‚РѕРј (РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёР№ РЅР°Рґ РЅРёРј)
+ * Класс для управления аккаунтом (выполнения операций над ним)
  */
 public class Core {
 	private Map<String, Double> curse;
@@ -66,7 +66,7 @@ public class Core {
 		double given = money * curse.get(currency);
 		double balance = account.getBalance() - given;
 		account.setBalance(balance);
-		//РџРѕ РёРґРµРµ С‚СѓС‚ РЅСѓР¶РЅРѕ Р·Р°РїРёСЃС‹РІР°С‚СЊ РІ С„Р°Р№Р» РІСЃРµ РёР·РјРµРЅРµРЅРёСЏ
+		//По идее тут нужно записывать в файл все изменения
 		return R.Given + ": " + String.format("%.2f", given)   + " " + R.CURRENCY_UAH + " \n"
 			+R.Balance + ": " + String.format("%.2f", balance) + " " + R.CURRENCY_UAH;
 	}

@@ -1,13 +1,13 @@
 package org.yegorov.lab8;
 /*
- * РљР»Р°СЃСЃ СЂРµСЃСѓСЂСЃРѕРІ
+ * Класс ресурсов
  */
 public final class R {
-	// РљРѕРЅСЃС‚Р°РЅС‚С‹
-	final public static String CURRENCY_UAH = "UAH Рі";
-	final public static String CURRENCY_RUB = "RUB СЂ";
+	// Константы
+	final public static String CURRENCY_UAH = "UAH г";
+	final public static String CURRENCY_RUB = "RUB р";
 	final public static String CURRENCY_USD = "USD $";
-	final public static String CURRENCY_EUR = "EUR в‚¬";
+	final public static String CURRENCY_EUR = "EUR €";
 
 	final public static Double CURSE_UAH = 1.0;
 	final public static Double CURSE_RUB = 0.27;
@@ -18,10 +18,10 @@ public final class R {
 	final public static String ALIAS_XML = "Account";
 	final public static String ACCOUNT_FILE_PATH = "account.xml";
 	
-	final public static String Currency = "Р’Р°Р»СЋС‚Р°";
-	final public static String Given = "Р’С‹РґР°РЅРѕ";
-	final public static String Balance = "РћСЃС‚Р°С‚РѕРє";
-	final public static String ERROR_money_tight = "РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РґРµРЅРµРі \nРґР»СЏ РІС‹РґР°С‡Рё";
+	final public static String Currency = "Валюта";
+	final public static String Given = "Выдано";
+	final public static String Balance = "Остаток";
+	final public static String ERROR_money_tight = "Недостаточно денег \nдля выдачи";
 	
 	// GUI 
 	final public static String Settings = "Settings";
@@ -33,25 +33,25 @@ public final class R {
 	final public static String Ask_quit = "Are you sure you want to quit?";
 	
 	final public static String Menu_item_show_hide = "Show/Hide menu";
-	final public static String Withdraw_funds = "РЎРЅСЏС‚СЊ СЃСЂРµРґСЃС‚РІР°";
-	final public static String Watch_balance = "РџСЂРѕСЃРјРѕС‚СЂ Р±Р°Р»Р°РЅСЃР°";
+	final public static String Withdraw_funds = "Снять средства";
+	final public static String Watch_balance = "Просмотр баланса";
 	final public static String ATM = "ATM";
 	
 	final public static String Input_font = "Input Font";
 	
-	final public static String Incorrect_password = "Р’С‹ РІРІРµР»Рё РЅРµРїСЂР°РІРёР»СЊРЅРѕ 3 СЂР°Р·Р° РїР°СЂРѕР»СЊ. РљР°СЂС‚РѕС‡РєР° Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅР°";
-	final public static String Not_fount_file_error = "Р¤Р°Р№Р» СЃ РґР°РЅРЅС‹РјРё Р°РєРєР°СѓРЅС‚Р° РЅРµ РЅР°Р№РґРµРЅ";
-	final public static String Unknown_error = "РќРµРёР·РІРµСЃС‚РЅР°СЏ РѕС€РёР±РєР°";
-	final public static String Enter_password = "Р’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ";
-	final public static String Repeat_password = "РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ РїР°СЂРѕР»СЊ! РџРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ";
+	final public static String Incorrect_password = "Вы ввели неправильно 3 раза пароль. Карточка заблокирована";
+	final public static String Not_fount_file_error = "Файл с данными аккаунта не найден";
+	final public static String Unknown_error = "Неизвестная ошибка";
+	final public static String Enter_password = "Введите пароль";
+	final public static String Repeat_password = "Неправильный пароль! Повторите ввод";
 	
-	final public static String Wellcome = "Р”РѕР±СЂС‹Р№ РґРµРЅСЊ, ";
-	final public static String String_balance = "РќР° РІР°С€РµРј РґРµРЅРµР¶РЅРѕРј СЃС‡РµС‚Сѓ: ";
+	final public static String Wellcome = "Добрый день, ";
+	final public static String String_balance = "На вашем денежном счету: ";
 	
-	final public static String String_take_money = "Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ: ";
-	final public static String String_next = "РџСЂРѕРґРѕР»Р¶РёС‚СЊ";
-	final public static String String_cash = "Р’С‹РґР°С‡Р° РЅР°Р»РёС‡РЅС‹С…...";
-	final public static String String_error_cash = "РќРµРїСЂР°РІРёР»СЊРЅРѕ РІРІРµРґРµРЅР° СЃСѓРјРјР°";
-	final public static String String_error = "РћС€РёР±РєР°";
+	final public static String String_take_money = "Введите сумму: ";
+	final public static String String_next = "Продолжить";
+	final public static String String_cash = "Выдача наличных...";
+	final public static String String_error_cash = "Неправильно введена сумма";
+	final public static String String_error = "Ошибка";
 
 }
